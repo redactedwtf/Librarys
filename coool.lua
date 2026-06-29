@@ -5548,3 +5548,445 @@ end
 
 getgenv().Library = Library
 return Library
+
+
+
+
+
+
+
+
+
+local Window = Library:Window({
+    Name = "My Cheat",
+    SubTitle = "Enhanced Library v2.0",
+    License = "Lifetime",
+    TabWidth = 155
+})
+
+local Watermark = Library:Watermark({
+    Name = "Enhanced Library",
+    SubText = "v2.0"
+})
+
+local KeybindList = Library:KeybindList()
+
+local AimbotPage = Window:Page({
+    Name = "Aimbot",
+    Icon = ""
+})
+
+local GeneralSection = AimbotPage:Section({
+    Name = "General Settings",
+    Side = 1
+})
+
+local EnableAimbot = GeneralSection:Toggle({
+    Name = "Enable Aimbot",
+    Flag = "AimbotEnabled",
+    Default = true,
+    Desc = "Toggle the aimbot on/off",
+    Callback = function(Value)
+        print("Aimbot enabled:", Value)
+    end
+})
+
+EnableAimbot:Keybind({
+    Name = "Aimbot Key",
+    Flag = "AimbotKey",
+    Default = Enum.KeyCode.LeftAlt,
+    Mode = "Toggle",
+    Callback = function(Value)
+        print("Aimbot key toggled:", Value)
+    end
+})
+
+GeneralSection:Slider({
+    Name = "FOV",
+    Flag = "AimbotFOV",
+    Default = 100,
+    Min = 0,
+    Max = 360,
+    Suffix = "°",
+    Step = 1,
+    Callback = function(Value)
+        print("FOV set to:", Value)
+    end
+})
+
+GeneralSection:Slider({
+    Name = "Smoothness",
+    Flag = "AimbotSmoothness",
+    Default = 5.0,
+    Min = 0.5,
+    Max = 10.0,
+    Suffix = "",
+    Decimals = 1,
+    Step = 0.5,
+    Callback = function(Value)
+        print("Smoothness set to:", Value)
+    end
+})
+
+GeneralSection:Dropdown({
+    Name = "Aimbot Mode",
+    Flag = "AimbotMode",
+    Items = {"Silent", "Normal", "Rage", "Legit"},
+    Default = "Silent",
+    Callback = function(Value)
+        print("Aimbot mode:", Value)
+    end
+})
+
+GeneralSection:Dropdown({
+    Name = "Target Filter",
+    Flag = "TargetFilter",
+    Items = {"All", "Players", "NPCs", "Vehicles"},
+    Default = {"Players", "Vehicles"},
+    Multi = true,
+    Callback = function(Value)
+        print("Targets:", table.concat(Value, ", "))
+    end
+})
+
+local AccuracySection = AimbotPage:Section({
+    Name = "Accuracy",
+    Side = 2
+})
+
+AccuracySection:Toggle({
+    Name = "Automatic Stop",
+    Flag = "AutoStop",
+    Default = false,
+    Callback = function(Value)
+        print("Auto stop:", Value)
+    end
+})
+
+local AccuracyToggle = AccuracySection:Toggle({
+    Name = "Show Hitbox",
+    Flag = "ShowHitbox",
+    Default = true,
+    Callback = function(Value)
+        print("Show hitbox:", Value)
+    end
+})
+
+AccuracyToggle:Colorpicker({
+    Name = "Hitbox Color",
+    Flag = "HitboxColor",
+    Default = Color3.fromRGB(255, 0, 0),
+    Alpha = 0.5,
+    Callback = function(Color, Alpha)
+        print("Color set to:", Color, "Alpha:", Alpha)
+    end
+})
+
+local DamageSlider = AccuracySection:Slider({
+    Name = "Damage Value",
+    Flag = "DamageValue",
+    Default = 20,
+    Min = 0,
+    Max = 100,
+    Suffix = "%",
+    Callback = function(Value)
+        print("Damage:", Value)
+    end
+})
+
+DamageSlider:Colorpicker({
+    Name = "Damage Color",
+    Flag = "DamageColor",
+    Default = Color3.fromRGB(255, 255, 0),
+    Callback = function(Color)
+        print("Damage color:", Color)
+    end
+})
+
+local VisualsPage = Window:Page({
+    Name = "Visuals",
+    Icon = ""
+})
+
+local PlayerVisuals = VisualsPage:Section({
+    Name = "Player Visuals",
+    Side = 1
+})
+
+local PlayerLabel = PlayerVisuals:Label({
+    Name = "Player ESP Settings"
+})
+
+PlayerLabel:Keybind({
+    Name = "ESP Toggle",
+    Flag = "ESPKey",
+    Default = Enum.KeyCode.F,
+    Callback = function(Value)
+        print("ESP toggled:", Value)
+    end
+})
+
+PlayerVisuals:Toggle({
+    Name = "Box ESP",
+    Flag = "BoxESP",
+    Default = true,
+    Desc = "Show boxes around players",
+    Callback = function(Value)
+        print("Box ESP:", Value)
+    end
+})
+
+PlayerVisuals:Toggle({
+    Name = "Name ESP",
+    Flag = "NameESP",
+    Default = true,
+    Callback = function(Value)
+        print("Name ESP:", Value)
+    end
+})
+
+PlayerVisuals:Toggle({
+    Name = "Health Bar",
+    Flag = "HealthBar",
+    Default = true,
+    Callback = function(Value)
+        print("Health bar:", Value)
+    end
+})
+
+local EspColorPicker = PlayerVisuals:Label({
+    Name = "ESP Colors"
+})
+
+EspColorPicker:Colorpicker({
+    Name = "Box Color",
+    Flag = "BoxColor",
+    Default = Color3.fromRGB(255, 255, 255),
+    Callback = function(Color)
+        print("Box color:", Color)
+    end
+})
+
+EspColorPicker:Colorpicker({
+    Name = "Name Color",
+    Flag = "NameColor",
+    Default = Color3.fromRGB(255, 255, 255),
+    Callback = function(Color)
+        print("Name color:", Color)
+    end
+})
+
+local WorldVisuals = VisualsPage:Section({
+    Name = "World Visuals",
+    Side = 2
+})
+
+WorldVisuals:Toggle({
+    Name = "Chams",
+    Flag = "Chams",
+    Default = false,
+    Desc = "Highlight walls and objects",
+    Callback = function(Value)
+        print("Chams:", Value)
+    end
+})
+
+WorldVisuals:Slider({
+    Name = "Wall Transparency",
+    Flag = "WallTransparency",
+    Default = 50,
+    Min = 0,
+    Max = 100,
+    Suffix = "%",
+    Callback = function(Value)
+        print("Wall transparency:", Value)
+    end
+})
+
+WorldVisuals:List({
+    Name = "Visible Objects",
+    Flag = "VisibleObjects",
+    Items = {"Walls", "Floors", "Props", "Vehicles", "Weapons"},
+    Default = {"Walls", "Vehicles"},
+    Multi = true,
+    Callback = function(Value)
+        print("Visible:", table.concat(Value, ", "))
+    end
+})
+
+local MiscPage = Window:Page({
+    Name = "Misc",
+    Icon = ""
+})
+
+local PlayerSection = MiscPage:Section({
+    Name = "Player Settings",
+    Side = 1
+})
+
+PlayerSection:Textbox({
+    Name = "Walk Speed",
+    Flag = "WalkSpeed",
+    Default = "16",
+    Placeholder = "Enter speed...",
+    Numeric = true,
+    Callback = function(Value)
+        local Speed = tonumber(Value) or 16
+        print("Walk speed set to:", Speed)
+    end
+})
+
+PlayerSection:Textbox({
+    Name = "Jump Power",
+    Flag = "JumpPower",
+    Default = "50",
+    Placeholder = "Enter jump power...",
+    Numeric = true,
+    Finished = true,
+    Callback = function(Value)
+        local Power = tonumber(Value) or 50
+        print("Jump power set to:", Power)
+    end
+})
+
+PlayerSection:Slider({
+    Name = "Gravity",
+    Flag = "Gravity",
+    Default = 100,
+    Min = 0,
+    Max = 200,
+    Suffix = "%",
+    Callback = function(Value)
+        print("Gravity:", Value)
+    end
+})
+
+local GuiSection = MiscPage:Section({
+    Name = "GUI Settings",
+    Side = 2
+})
+
+GuiSection:Button({
+    Name = "Reset GUI Position",
+    Desc = "Reset the window to center",
+    Callback = function()
+        Window:Center()
+        print("GUI reset to center")
+    end
+})
+
+GuiSection:Button({
+    Name = "Minimize GUI",
+    Desc = "Minimize the window",
+    Callback = function()
+        Window:Minimize()
+        print("GUI minimized")
+    end
+})
+
+GuiSection:Button({
+    Name = "Test Notification",
+    Desc = "Show a test notification",
+    Style = "Accent",
+    Callback = function()
+        Library:Notification("Test Notification", 3, Library.Theme.Accent)
+        print("Notification sent")
+    end
+})
+
+Library:Init()
+
+KeybindList:Add("Aimbot", "Toggle", "LALT")
+KeybindList:Add("ESP", "Toggle", "F")
+KeybindList:Add("Menu", "Toggle", "X")
+
+Watermark:Add("Custom Text")
+local DynamicText = Watermark:Add("Dynamic")
+
+task.spawn(function()
+    while wait(1) do
+        DynamicText:SetText(os.date("%H:%M:%S"))
+    end
+end)
+
+Library:Notification("Welcome to Enhanced Library!", 3, Library.Theme.Accent)
+
+game:BindToClose(function()
+    local ConfigName = "AutoSave_" .. os.date("%Y-%m-%d_%H-%M-%S")
+    local ConfigPath = Library.Directory .. Library.Folders.Configs .. "/" .. ConfigName .. ".json"
+    
+    local Success, Data = pcall(function()
+        return Library:GetConfig()
+    end)
+    
+    if Success and Data then
+        writefile(ConfigPath, Data)
+        print("Config auto-saved:", ConfigName)
+    end
+end)
+
+task.spawn(function()
+    while wait(5) do
+        local AimbotEnabled = Library.Flags["AimbotEnabled"]
+        local FOV = Library.Flags["AimbotFOV"]
+        local WalkSpeed = tonumber(Library.Flags["WalkSpeed"]) or 16
+        
+        if AimbotEnabled then
+            print("Aimbot is enabled with FOV:", FOV)
+        end
+        
+        local Player = game:GetService("Players").LocalPlayer
+        if Player and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            Player.Character.Humanoid.WalkSpeed = WalkSpeed
+        end
+    end
+end)
+
+local CustomPage = Window:Page({
+    Name = "Custom",
+    Icon = ""
+})
+
+local CustomSection = CustomPage:Section({
+    Name = "Dynamic Section",
+    Side = 1
+})
+
+CustomSection:Label({
+    Name = "This section was created dynamically"
+})
+
+CustomSection:Button({
+    Name = "Add New Item",
+    Callback = function()
+        CustomSection:Label({
+            Name = "New Item Added at " .. os.date("%H:%M:%S")
+        })
+        Library:Notification("New item added!", 2, Library.Theme.Success)
+    end
+})
+
+CustomSection:Button({
+    Name = "Clear Section",
+    Style = "Danger",
+    Callback = function()
+        local Content = CustomSection.Items.Content.Instance
+        for _, Child in ipairs(Content:GetChildren()) do
+            if not Child:IsA("UIListLayout") then
+                Child:Destroy()
+            end
+        end
+        Library:Notification("Section cleared!", 2, Library.Theme.Warning)
+    end
+})
+
+local TooltipExample = CustomSection:Label({
+    Name = "Hover over me for a tooltip"
+})
+
+TooltipExample.Items.Text:OnHover(function()
+    Library:Tooltip("This is a tooltip!", 2)
+end, function() end)
+
+print("Enhanced Library Example loaded successfully!")
+print("Press X to toggle the menu (default keybind)")
